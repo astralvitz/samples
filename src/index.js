@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
+// tutorial solutions - more robust:
+// https://github.com/harman052/react-tutorial-solutions/blob/master/src/components/Game.js
+
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
