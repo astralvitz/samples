@@ -30,18 +30,6 @@ function Square(props) {
   )
 }
 
-// function Moves(props) {
-//   return (
-//     a
-//   )
-// }
-
-// class MoveHistory extends React.Component {
-//   render() {
-//     return (a)
-//   }
-// }
-
 class Board extends React.Component {
   renderSquare(i) {
     return (
@@ -174,6 +162,8 @@ class Game extends React.Component {
     let status;
     if (winner) {
       status = 'Winner: ' + (this.state.xIsNext ? 'O' : 'X');
+    } else if (history.length >= 10) {
+      status = 'Draw - Refresh to play again!';
     } else {
       status = 'Next player: ' + 
       (this.state.xIsNext ? 'X' : 'O');
