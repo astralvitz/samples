@@ -2,19 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-// class Square extends React.Component {
-//   render() {
-//     return (
-//       <button
-//         className="square"
-//         onClick={() => this.props.onClick()}
-//       >
-//         {this.props.value}
-//       </button>
-//     );
-//   }
-// }
-
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -29,7 +16,6 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      // return squares[a];
       return lines[i];
     }
   }
@@ -142,8 +128,10 @@ class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() =>
-            this.jumpTo(move)}>{desc}</button>
+          <button
+            className={`${this.state.stepNumber===move && "move-selected"}`}
+            onClick={() =>this.jumpTo(move)}>{desc}
+          </button>
         </li>
       )
     })

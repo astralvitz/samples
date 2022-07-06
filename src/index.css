@@ -40,6 +40,10 @@ ol, ul {
   outline: none;
 }
 
+.move-selected {
+  font-weight: bold;
+}
+
 .kbd-navigation .square:focus {
   background: #ddd;
 }
