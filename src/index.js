@@ -85,8 +85,6 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
     };
-
-    this.handleMoveSortOrder = this.handleMoveSortOrder.bind(this);
   }
 
   handleClick(i) {
@@ -150,11 +148,12 @@ class Game extends React.Component {
     return (this.state.historyDesc) ? moves : moves.reverse(); 
   }
 
-  handleMoveSortOrder(e) {
+  toggleSortOrder = () => {
+    const sortOrder = !this.state.historyDesc;
     this.setState({
-      historyDesc: e.target.checked
-    })
-  }
+      historyDesc: sortOrder
+    });
+  };
 
   render() {
     const history = this.state.history;
@@ -183,14 +182,9 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <p>
-            <input
-              type="checkbox"
-              checked={this.state.historyDesc}
-              onChange={this.handleMoveSortOrder}
-            />
-            Show moves list in descending order
-          </p>
+          { history.length > 1 ? (
+            <button onClick={() => this.toggleSortOrder()}>Toggle sort order</button>
+          ) : ( "" )}
           <ol>{moves}</ol>
         </div>
       </div>
