@@ -113,6 +113,22 @@ class Game extends React.Component {
     });
   }
 
+  displayColRowMove(step, prevStep) {
+    let newMove;
+    for (let i = 0; i < step.squares.length; i++) {
+      if (step.squares[i] != prevStep.squares[i]) {
+        let x = Math.floor(i / 3);
+        let y = i % 3;
+        newMove = ' (' + x + ', ' + y + ')';
+        break;
+      }
+    }
+    
+    return (
+      newMove
+    )
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -120,7 +136,7 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move #' + move :
+        'Go to move #' + move + this.displayColRowMove(step, history[move-1]) :
         'Go to game start';
       return (
         <li key={move}>
