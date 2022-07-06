@@ -30,6 +30,18 @@ function Square(props) {
   )
 }
 
+// function Moves(props) {
+//   return (
+//     a
+//   )
+// }
+
+// class MoveHistory extends React.Component {
+//   render() {
+//     return (a)
+//   }
+// }
+
 class Board extends React.Component {
   renderSquare(i) {
     return (
@@ -78,9 +90,12 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null),
       }],
+      historyDesc: true,
       stepNumber: 0,
       xIsNext: true,
     };
+
+    this.handleMoveSortOrder = this.handleMoveSortOrder.bind(this);
   }
 
   handleClick(i) {
@@ -124,16 +139,14 @@ class Game extends React.Component {
     )
   }
 
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+  buildMovesList(history) {
+    let moves = [];
 
-    const moves = history.map((step, move) => {
+    history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move + this.displayColRowMove(step, history[move-1]) :
         'Go to game start';
-      return (
+      moves.push(
         <li key={move}>
           <button
             className={`${this.state.stepNumber===move && "move-selected"}`}
@@ -142,6 +155,21 @@ class Game extends React.Component {
         </li>
       )
     })
+    
+    return (this.state.historyDesc) ? moves : moves.reverse(); 
+  }
+
+  handleMoveSortOrder(e) {
+    this.setState({
+      historyDesc: e.target.checked
+    })
+  }
+
+  render() {
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
+    const winner = calculateWinner(current.squares);
+    const moves = this.buildMovesList(history);
 
     let status;
     if (winner) {
@@ -157,11 +185,19 @@ class Game extends React.Component {
           <Board 
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
-            winner={winner}//color winning squares
+            winner={winner}
           />
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <p>
+            <input
+              type="checkbox"
+              checked={this.state.historyDesc}
+              onChange={this.handleMoveSortOrder}
+            />
+            Show moves list in descending order
+          </p>
           <ol>{moves}</ol>
         </div>
       </div>
